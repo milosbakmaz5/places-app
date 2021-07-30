@@ -1,0 +1,61 @@
+@import "../../sass/mixins";
+.messenger {
+  height: calc(100vh - 5rem);
+  display: flex;
+}
+
+.chatMenu {
+  width: 90%;
+  margin: 3rem auto;
+}
+
+.chatBox {
+  height: calc(100vh - 5rem);
+  width: 90%;
+  margin: 0 auto;
+  .chatBoxWrapper {
+    display: flex;
+    flex-direction: column;
+  }
+  h3 {
+    text-align: center;
+  }
+  .chatBoxTop {
+    overflow-y: scroll;
+    padding-right: 0.5rem;
+  }
+  .chatBoxBottom {
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    div {
+      width: 80%;
+      height: 150px;
+      padding: 1rem;
+
+      textarea {
+        height: 100%;
+      }
+    }
+
+    button {
+      height: 44px;
+      cursor: pointer;
+    }
+  }
+}
+
+.chatMenuWrapper,
+.chatBoxWrapper {
+  padding: 2rem;
+  height: 100%;
+}
+
+@include mdMinBreakPoint {
+  .chatMenu,
+  .chatBox {
+    width: 70%;
+  }
+}

@@ -1,13 +1,20 @@
+@import "../../../../sass/mixins";
 .main-navigation__menu-btn {
   width: 3rem;
   height: 3rem;
   background: transparent;
   border: none;
   display: flex;
-  flex-direction: column;
-  justify-content: space-around;
+  justify-content: center;
+  align-items: center;
   margin-right: 2rem;
   cursor: pointer;
+
+  svg {
+    height: 16px;
+    width: 16px;
+    fill: $red;
+  }
 }
 
 .main-navigation__menu-btn span {
@@ -17,13 +24,9 @@
   background: white;
 }
 
-.main-navigation__title {
-  color: white;
-}
-
 .main-navigation__title a {
   text-decoration: none;
-  color: white;
+  color: $primaryTextColor;
 }
 
 .main-navigation__header-nav {
@@ -34,7 +37,7 @@
   height: 100%;
 }
 
-@media (min-width: 768px) {
+@include mdMinBreakPoint {
   .main-navigation__menu-btn {
     display: none;
   }

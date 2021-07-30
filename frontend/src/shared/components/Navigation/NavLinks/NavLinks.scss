@@ -1,3 +1,5 @@
+@import "../../../../sass/variables";
+
 .nav-links {
   list-style: none;
   margin: 0;
@@ -18,15 +20,16 @@
   border: 1px solid transparent;
   color: #292929;
   text-decoration: none;
-  padding: 0.5rem;
+  padding: 0.5rem 0.7rem;
 }
 
 .nav-links a:hover,
 .nav-links a:active,
 .nav-links a.active {
-  background: #f8df00;
-  border-color: #292929;
-  color: #292929;
+  color: white;
+  border-radius: 30px;
+  border: 3px solid rgb(33, 33, 33);
+  background-color: rgb(33, 33, 33);
 }
 
 .nav-links button {
@@ -36,6 +39,7 @@
   background: transparent;
   padding: 0.5rem;
   font: inherit;
+  border-radius: 30px;
 }
 
 .nav-links button:focus {
@@ -58,19 +62,15 @@
   }
 
   .nav-links a {
-    color: white;
+    color: rgb(33, 33, 33);
     text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
   }
 
-  .nav-links button {
-    border: 1px solid white;
-    color: white;
-    background: transparent;
-  }
-  
   .nav-links button:hover,
   .nav-links button:active {
-    background: #f8df00;
-    color: #292929;
+    background: $red;
+    color: white;
   }
 }

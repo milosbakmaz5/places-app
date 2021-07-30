@@ -1,10 +1,30 @@
-const { uuid } = require("uuidv4");
 const { validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
+const fs = require("fs");
+const util = require("util");
+const unlinkFile = util.promisify(fs.unlink);
+
 const HttpError = require("../models/http-error");
 const User = require("../models/user");
+const { uploadFile } = require("../util/s3");
+
+const getUserById = async (req, res, next) => {
+  const userId = req.params.uid;
+  let user;
+  try {
+    user = await User.findById(userId);
+  } catch (err) {
+    const error = new HttpError(
+      "Something went wrong. Please try again later",
+      500
+    );
+    return next(error);
+  }
+
+  res.status(200).json({ user: user.toObject({ getters: true }) });
+};
 
 const getUsers = async (req, res, next) => {
   let users;
@@ -59,6 +79,18 @@ const signUp = async (req, res, next) => {
     return next(
       new HttpError("Could not create user now. Please try again later", 500)
     );
+  }
+
+  try {
+    await uploadFile(req.file);
+  } catch (err) {
+    return next(new HttpError("Uploading image failed.", 500));
+  }
+
+  try {
+    await unlinkFile(req.file.path);
+  } catch (error) {
+    return next(new HttpError("Unlinking file failed", 500));
   }
 
   const createdUser = new User({
@@ -163,6 +195,7 @@ const logIn = async (req, res, next) => {
   });
 };
 
+exports.getUserById = getUserById;
 exports.getUsers = getUsers;
 exports.signUp = signUp;
 exports.logIn = logIn;

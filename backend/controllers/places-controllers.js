@@ -1,4 +1,3 @@
-const { uuid } = require("uuidv4");
 const fs = require('fs');
 const { validationResult } = require("express-validator");
 
@@ -6,8 +5,11 @@ const HttpError = require("../models/http-error");
 const getCoordsForAddress = require("../util/location");
 const Place = require("../models/place");
 const User = require("../models/user");
-const mongooseUniqueValidator = require("mongoose-unique-validator");
 const mongoose = require("mongoose");
+const {uploadFile} = require("../util/s3");
+
+const util = require("util");
+const unlinkFile = util.promisify(fs.unlink);
 
 const getPlaceById = async (req, res, next) => {
   const placeId = req.params.pid;
@@ -100,6 +102,18 @@ const createPlace = async (req, res, next) => {
   if (!user) {
     return next(new HttpError("Could not find user for provided id", 404));
   }
+
+  try {
+    await uploadFile(req.file);
+  } catch (err) {
+    return next(new HttpError("Uploading image failed.", 500));
+  }
+
+  try {
+    await unlinkFile(req.file.path);
+   } catch (error) {
+     return next(new HttpError("Unlinking file failed", 500));
+   }
 
   try {
     const sess = await mongoose.startSession();

@@ -1,0 +1,40 @@
+@import "../../../sass/variables";
+.message {
+  display: flex;
+  flex-direction: column;
+  margin-top: 2rem;
+}
+
+.messageTop {
+  display: flex;
+}
+
+.messageImage {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 0.5rem;
+}
+
+.messageText {
+  margin: 0;
+  padding: 1rem;
+  border-radius: 10px;
+  color: white;
+  max-width: 300px;
+  background-color: $darkerBlue;
+}
+
+.messageBottom {
+  font-size: 12px;
+  margin-top: 10px;
+}
+
+.message.own {
+  align-items: flex-end;
+  .messageText {
+    background-color: $orange;
+    color: $primaryTextColor;
+  }
+}

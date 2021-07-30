@@ -7,6 +7,9 @@ const mongoose = require("mongoose");
 
 const placesRoutes = require("./routes/places-routes");
 const usersRoutes = require("./routes/users-routes");
+const conversationsRoutes = require("./routes/conversations-routes");
+const messagesRoutes = require("./routes/messages-routes");
+const { getFileStream } = require("./util/s3");
 
 const HttpError = require("./models/http-error");
 
@@ -14,7 +17,12 @@ const app = express();
 
 app.use(bodyParser.json());
 
-app.use("/uploads/images", express.static(path.join("uploads", "images")));
+app.get("/uploads/images/:key", (req, res, next) => {
+  const key = req.params.key;
+  const readStream = getFileStream(key);
+
+  readStream.pipe(res);
+});
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -28,6 +36,8 @@ app.use((req, res, next) => {
 
 app.use("/api/places", placesRoutes);
 app.use("/api/users", usersRoutes);
+app.use("/api/conversations", conversationsRoutes);
+app.use("/api/messages", messagesRoutes);
 
 app.use((req, res, next) => {
   const error = new HttpError("Could not find this route.", 404);

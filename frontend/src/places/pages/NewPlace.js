@@ -4,16 +4,16 @@ import Input from "../../shared/components/FormElements/Input/Input";
 import Button from "../../shared/components/FormElements/Button/Button";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner/LoadingSpinner";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal/ErrorModal";
-import ImageUpload from '../../shared/components/FormElements/ImageUpload/ImageUpload';
+import ImageUpload from "../../shared/components/FormElements/ImageUpload/ImageUpload";
 import {
   VALIDATOR_MINLENGTH,
   VALIDATOR_REQUIRE,
 } from "../../shared/util/validators";
 import { useForm } from "../../shared/hooks/form-hook";
 import { useHttpClient } from "../../shared/hooks/http-hook";
-import {AuthContext} from "../../shared/context/auth-context";
+import { AuthContext } from "../../shared/context/auth-context";
 
-import "./PlaceForm.css";
+import "./PlaceForm.scss";
 import { useHistory } from "react-router";
 
 const NewPlace = () => {
@@ -27,7 +27,7 @@ const NewPlace = () => {
       },
       image: {
         value: null,
-        isValid: false
+        isValid: false,
       },
       description: {
         value: "",
@@ -47,14 +47,19 @@ const NewPlace = () => {
     event.preventDefault();
     try {
       const formData = new FormData();
-      formData.append('title', formState.inputs.title.value);
-      formData.append('description', formState.inputs.description.value);
-      formData.append('address', formState.inputs.address.value);
-      formData.append('image', formState.inputs.image.value);
-      await sendRequest(process.env.REACT_APP_BACKEND_URL +  "/places", "POST", formData, {
-        Authorization: 'Bearer ' + auth.token
-      });
-      history.push('/');
+      formData.append("title", formState.inputs.title.value);
+      formData.append("description", formState.inputs.description.value);
+      formData.append("address", formState.inputs.address.value);
+      formData.append("image", formState.inputs.image.value);
+      await sendRequest(
+        process.env.REACT_APP_BACKEND_URL + "/places",
+        "POST",
+        formData,
+        {
+          Authorization: "Bearer " + auth.token,
+        }
+      );
+      history.push("/");
     } catch (error) {}
   };
 
@@ -95,7 +100,7 @@ const NewPlace = () => {
           errorText="Please enter a valid address."
           onInput={inputHandler}
         />
-        <Button type="submit" disabled={!formState.isValid}>
+        <Button wide type="submit" disabled={!formState.isValid}>
           ADD PLACE
         </Button>
       </form>

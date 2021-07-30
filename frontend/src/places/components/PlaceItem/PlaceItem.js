@@ -7,15 +7,18 @@ import Map from "../../../shared/components/UIElements/Map/Map";
 import { AuthContext } from "../../../shared/context/auth-context";
 import { useHttpClient } from "../../../shared/hooks/http-hook";
 import LoadingSpinner from "../../../shared/components/UIElements/LoadingSpinner/LoadingSpinner";
+import RenderSmoothImage from "render-smooth-image-react";
+import "render-smooth-image-react/build/style.css";
+import { FiEdit, FiMapPin, FiTrash2 } from "react-icons/fi";
 
-import "./PlaceItem.css";
+import "./PlaceItem.scss";
 import ErrorModal from "../../../shared/components/UIElements/ErrorModal/ErrorModal";
 
 const PlaceItem = (props) => {
   const auth = useContext(AuthContext);
   const [showMap, setShowMap] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
-  const {isLoading, error, sendRequest, clearError} = useHttpClient()
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   const openMapHandler = () => {
     setShowMap(true);
@@ -43,15 +46,12 @@ const PlaceItem = (props) => {
         { Authorization: "Bearer " + auth.token }
       );
       props.onDelete(props.id);
-    } catch (error) {
-      
-    }
-
+    } catch (error) {}
   };
 
   return (
     <React.Fragment>
-      <ErrorModal error={error} onClear={clearError}/>
+      <ErrorModal error={error} onClear={clearError} />
       <Modal
         show={showMap}
         onCancel={closeMapHandler}
@@ -87,9 +87,16 @@ const PlaceItem = (props) => {
       </Modal>
       <li className="place-item">
         <Card className="place-item__content">
-          {isLoading && <LoadingSpinner asOverlay/>}
+          {isLoading && <LoadingSpinner asOverlay />}
           <div className="place-item__image">
-            <img src={`${process.env.REACT_APP_ASSET_URL}/${props.image}`} alt={props.title} />
+            <RenderSmoothImage
+              src={`${process.env.REACT_APP_ASSET_URL}/${props.image}`}
+              alt={props.title}
+            />
+            {/* <img
+              src={`${process.env.REACT_APP_ASSET_URL}/${props.image}`}
+              alt={props.title}
+            /> */}
           </div>
           <div className="place-item__info">
             <h2>{props.title}</h2>
@@ -97,15 +104,17 @@ const PlaceItem = (props) => {
             <p>{props.description}</p>
           </div>
           <div className="place-item__actions">
-            <Button inverse onClick={openMapHandler}>
-              VIEW ON MAP
+            <Button transparent onClick={openMapHandler}>
+              <FiMapPin />
             </Button>
             {auth.userId === props.creatorId && (
-              <Button to={`/places/${props.id}`}>EDIT</Button>
+              <Button transparent to={`/places/${props.id}`}>
+                <FiEdit />
+              </Button>
             )}
             {auth.userId === props.creatorId && (
-              <Button danger onClick={showDeleteHandler}>
-                DELETE
+              <Button transparent onClick={showDeleteHandler}>
+                <FiTrash2 />
               </Button>
             )}
           </div>

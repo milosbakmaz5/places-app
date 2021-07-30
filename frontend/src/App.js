@@ -11,6 +11,8 @@ import Users from "./user/pages/Users";
 import { AuthContext } from "./shared/context/auth-context";
 import { useAuth } from "./shared/hooks/auth-hook";
 import LoadingSpinner from "./shared/components/UIElements/LoadingSpinner/LoadingSpinner";
+import Chat from "./messenger/pages/Chat";
+const Messenger = React.lazy(() => import("./messenger/pages/Messenger"));
 
 const NewPlace = React.lazy(() => import("./places/pages/NewPlace"));
 const UserPlaces = React.lazy(() => import("./places/pages/UserPlaces"));
@@ -27,11 +29,17 @@ const App = () => {
         <Route path="/" exact>
           <Users />
         </Route>
-        <Route path="/places/new" exact>
-          <NewPlace />
-        </Route>
         <Route path="/:userId/places" exact>
           <UserPlaces />
+        </Route>
+        <Route path="/messenger" exact>
+          <Messenger />
+        </Route>
+        <Route path="/chat/:conversationId" exact>
+          <Chat />
+        </Route>
+        <Route path="/places/new" exact>
+          <NewPlace />
         </Route>
         <Route path="/places/:placeId" exact>
           <UpdatePlace />

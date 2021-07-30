@@ -6,7 +6,7 @@ import UsersList from "../components/UsersList/UsersList";
 
 const Users = () => {
   const [loadedUsers, setLoadedUsers] = useState();
-  const {isLoading, error, sendRequest, clearError} = useHttpClient();
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   useEffect(() => {
     const fetchUsers = async () => {

@@ -1,9 +1,11 @@
+@import "../../../../sass/variables";
+
 .button {
   font: inherit;
   padding: 0.5rem 1.5rem;
-  border: 1px solid #ff0055;
+  border: 1px solid $darkerBlue;
   border-radius: 4px;
-  background: #ff0055;
+  background: $darkerBlue;
   color: white;
   cursor: pointer;
   margin-right: 1rem;
@@ -17,30 +19,41 @@
 
 .button:hover,
 .button:active {
-  background: #ff4382;
-  border-color: #ff4382;
+  background: $blue;
+  border-color: $blue;
 }
 
 .button--inverse {
   background: transparent;
-  color: #ff0055;
+  color: $darkerBlue;
 }
 
 .button--inverse:hover,
 .button--inverse:active {
   color: white;
-  background: #ff0055;
+  background: $darkerBlue;
+}
+
+.button--transparent {
+  background: transparent;
+  color: $primaryTextColor;
+  border: none;
+}
+
+.button--transparent:hover,
+.button--transparent:active {
+  background: transparent;
 }
 
 .button--danger {
-  background: #830000;
-  border-color: #830000;
+  background: $darkerRed;
+  border-color: $darkerRed;
 }
 
 .button--danger:hover,
 .button--danger:active {
-  background: #f34343;
-  border-color: #f34343;
+  background: $red;
+  border-color: $red;
 }
 
 .button:disabled,
@@ -58,4 +71,9 @@
 
 .button--big {
   font-size: 1.5rem;
+}
+
+.button--wide {
+  display: block;
+  width: 100%;
 }

@@ -1,11 +1,9 @@
-.place-form {
+.card {
   position: relative;
-  list-style: none;
-  margin: 0 auto;
-  padding: 1rem;
-  width: 90%;
-  max-width: 40rem;
+  margin: 0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   border-radius: 6px;
+  padding: 1rem;
+  overflow: hidden;
   background: white;
 }

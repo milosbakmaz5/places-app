@@ -1,15 +1,18 @@
-import React from 'react';
+import React from "react";
+import RenderSmoothImage from "render-smooth-image-react";
+import "render-smooth-image-react/build/style.css";
 
-import './Avatar.css';
+import "./Avatar.scss";
 
-const Avatar = props => {
+const Avatar = (props) => {
   return (
     <div className={`avatar ${props.className}`} style={props.style}>
-      <img
+      <RenderSmoothImage src={props.image} alt={props.alt} />
+      {/* <img
         src={props.image}
         alt={props.alt}
         style={{ width: props.width, height: props.width }}
-      />
+      /> */}
     </div>
   );
 };

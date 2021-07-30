@@ -11,9 +11,9 @@ import {
 } from "../../shared/util/validators";
 import { useForm } from "../../shared/hooks/form-hook";
 import { useHttpClient } from "../../shared/hooks/http-hook";
-import {AuthContext} from '../../shared/context/auth-context';
+import { AuthContext } from "../../shared/context/auth-context";
 
-import "./PlaceForm.css";
+import "./PlaceForm.scss";
 
 const UpdatePlace = () => {
   const placeId = useParams().placeId;
@@ -68,18 +68,15 @@ const UpdatePlace = () => {
         "PATCH",
         JSON.stringify({
           title: formState.inputs.title.value,
-          description: formState.inputs.description.value
+          description: formState.inputs.description.value,
         }),
         {
           "Content-Type": "application/json",
-          Authorization: 'Bearer ' + auth.token
+          Authorization: "Bearer " + auth.token,
         }
       );
       history.push(`/${auth.userId}/places`);
-    } catch (error) {
-      
-    }
-
+    } catch (error) {}
   };
 
   if (isLoading) {
@@ -102,34 +99,34 @@ const UpdatePlace = () => {
 
   return (
     <React.Fragment>
-      <ErrorModal error={error} onClear={clearError}/>
+      <ErrorModal error={error} onClear={clearError} />
       {!isLoading && loadedPlace && (
-      <form className="place-form" onSubmit={placeUpdateSubmitHandler}>
-        <Input
-          id="title"
-          element="input"
-          type="text"
-          label="Title"
-          validators={[VALIDATOR_REQUIRE()]}
-          errorText="Please enter a valid title."
-          onInput={inputHandler}
-          initialValue={loadedPlace.title}
-          initialValid={true}
-        />
-        <Input
-          id="description"
-          element="textarea"
-          label="Description"
-          validators={[VALIDATOR_MINLENGTH(5)]}
-          errorText="Please enter a valid description (min 5 characters)."
-          onInput={inputHandler}
-          initialValue={loadedPlace.description}
-          initialValid={true}
-        />
-        <Button type="submit" disabled={!formState.isValid}>
-          UPDATE PLACE
-        </Button>
-      </form>
+        <form className="place-form" onSubmit={placeUpdateSubmitHandler}>
+          <Input
+            id="title"
+            element="input"
+            type="text"
+            label="Title"
+            validators={[VALIDATOR_REQUIRE()]}
+            errorText="Please enter a valid title."
+            onInput={inputHandler}
+            initialValue={loadedPlace.title}
+            initialValid={true}
+          />
+          <Input
+            id="description"
+            element="textarea"
+            label="Description"
+            validators={[VALIDATOR_MINLENGTH(5)]}
+            errorText="Please enter a valid description (min 5 characters)."
+            onInput={inputHandler}
+            initialValue={loadedPlace.description}
+            initialValid={true}
+          />
+          <Button wide type="submit" disabled={!formState.isValid}>
+            UPDATE PLACE
+          </Button>
+        </form>
       )}
     </React.Fragment>
   );

@@ -13,7 +13,7 @@ import { useForm } from "../../shared/hooks/form-hook";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
 
-import "./Auth.css";
+import "./Auth.scss";
 import ImageUpload from "../../shared/components/FormElements/ImageUpload/ImageUpload";
 
 const Auth = () => {
@@ -35,6 +35,7 @@ const Auth = () => {
   const auth = useContext(AuthContext);
 
   const switchModeHandler = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
     if (!isLoginMode) {
       setFormData(
         {
@@ -53,8 +54,8 @@ const Auth = () => {
           },
           image: {
             value: null,
-            isValid: false
-          }
+            isValid: false,
+          },
         },
         false
       );
@@ -82,10 +83,10 @@ const Auth = () => {
       } catch (error) {}
     } else {
       const formData = new FormData();
-      formData.append('email', formState.inputs.email.value);
-      formData.append('name', formState.inputs.name.value);
-      formData.append('password', formState.inputs.password.value);
-      formData.append('image', formState.inputs.image.value);
+      formData.append("email", formState.inputs.email.value);
+      formData.append("name", formState.inputs.name.value);
+      formData.append("password", formState.inputs.password.value);
+      formData.append("image", formState.inputs.image.value);
       try {
         const responseData = await sendRequest(
           process.env.REACT_APP_BACKEND_URL + "/users/signup",
@@ -103,9 +104,18 @@ const Auth = () => {
       <ErrorModal error={error} onClear={clearError} />
       <Card className="authentication">
         {isLoading && <LoadingSpinner asOverlay />}
-        <h2>Login Required</h2>
+        {isLoginMode && <h2>Login Required</h2>}
+        {!isLoginMode && <h2>Register</h2>}
         <hr />
         <form onSubmit={authSubmitHandler}>
+          {!isLoginMode && (
+            <ImageUpload
+              center
+              id="image"
+              onInput={inputHandler}
+              errorText="Please provide an image."
+            />
+          )}
           {!isLoginMode && (
             <Input
               id="name"
@@ -115,14 +125,6 @@ const Auth = () => {
               onInput={inputHandler}
               validators={[VALIDATOR_REQUIRE()]}
               errorText="Please enter a name."
-            />
-          )}
-          {!isLoginMode && (
-            <ImageUpload
-              center
-              id="image"
-              onInput={inputHandler}
-              errorText="Please provide an image."
             />
           )}
           <Input
@@ -143,14 +145,14 @@ const Auth = () => {
             validators={[VALIDATOR_MINLENGTH(6)]}
             errorText="Password should be at least 6 characters long."
           />
-          <Button type="submit" disabled={!formState.isValid}>
+          <Button wide type="submit" disabled={!formState.isValid}>
             {isLoginMode && "LOGIN"}
-            {!isLoginMode && "SIGNUP"}
+            {!isLoginMode && "SIGN UP"}
           </Button>
         </form>
-        <Button inverse onClick={switchModeHandler}>
-          {isLoginMode && "SIGNUP"}
-          {!isLoginMode && "LOGIN"}
+        <Button transparent onClick={switchModeHandler}>
+          {isLoginMode && "Don't have an account?"}
+          {!isLoginMode && "Already have an account?"}
         </Button>
       </Card>
     </React.Fragment>

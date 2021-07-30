@@ -1,9 +1,13 @@
 {
   "env": {
     "DB_USER":"admin",
-    "DB_PASSWORD":"jL0qkKSU6Z5qbHav",
+    "DB_PASSWORD":"Kj1jicLxxj5GGoHV",
     "DB_NAME":"mern-places",
     "GOOGLE_API_KEY":"AIzaSyDmWcNzdAABgE3AkwQRDsdX-yRiwQYvM5k",
-    "JWT_KEY":"supersecret_dont_share"
+    "JWT_KEY":"supersecret_dont_share",
+    "AWS_BUCKET_NAME":"milos0112997800055",
+    "AWS_BUCKET_REGION":"us-east-2",
+    "AWS_ACCESS_KEY":"AKIAY7I5TGZRCPNZEDXF",
+    "AWS_SECRET_KEY":"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"
   }
 }
